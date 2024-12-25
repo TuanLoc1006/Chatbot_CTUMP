@@ -1,0 +1,337 @@
+version: "3.1"
+
+intents:
+  - ask_hello
+  # - ask_dang_ky_giay_xac_nhan
+  # - ask_thongtin_khoa_phong_ban
+  # - ask_nhan_tro_cap
+  # - ask_the_thu_vien_tthl
+  # - ask_giay_cong_tac
+  # - ask_cap_the_sv
+  # - ask_hoc_bong
+  # - ask_baoluu_thoihoc
+  # - ask_caplai_BHYT
+  # - ask_caplai_qldt
+  # - ask_caplai_email_sv
+  # - ask_caplai_thanhphi_BHTN
+
+  - ask_hocphi
+  - ask_hocphi_nganh
+  - ask_CTDT
+  - ask_CTDT_nganh
+
+  - ask_daihoc_lienthong_saudaihoc
+  - ask_thong_tin_tuyen_sinh
+  - ask_thong_tin_tuyen_sinh_tung_nganh
+  - ask_diem_chuan_tung_nganh
+  - ask_chi_tieu_tung_nganh
+  - ask_tuyen_sinh_dh_sdh_lt
+  - ask_quy_trinh
+  - ask_quy_trinh_tuyen_sinh_dh_lt_sdh
+  - ask_doi_tuong_con_nguoi
+  - ask_doi_tuong_tuyen_sinh_dh_lt_sdh
+  - ask_thanh_toan_hoc_phi
+  - ask_diadiem_khoa
+  # - ask_email_khoa
+  - ask_thong_tin_ky_tuc_xa
+  # - ask_khoa
+  # - ask_dang_bo_truong_ctump
+  # - ask_dang_uy_truong_ctump
+  # - ask_dang
+  # - ask_ban_giam_hieu
+  # - ask_hoi_dong_truong
+  # - ask_thong_tin_truong
+  - ask_thong_tin_hieu_ban_giam_hieu
+
+entities:
+  - dang_bo_dang_uy:
+      roles:
+      - dang_bo
+      - dang_uy
+     
+  - hoi_dong_truong:
+      roles:
+      - thong_tin_co_ban
+      - chu_tich
+      - thanh_vien
+      - thu_ky
+      - nhiem_vu
+      - so_do_to_chuc
+
+  - ban_giam_hieu:
+      roles:
+      - hieu_truong
+      - pho_hieu_truong
+
+  - thong_tin_truong:
+      roles:
+      - thong_tin
+      - su_mang
+      - tam_nhin
+      - gia_tri_cot_loi
+      - triet_ly_giao_duc
+      - muc_tieu
+      - slogan
+
+  - ask:
+      roles:
+      - where
+      - email
+      - phone
+      - info
+
+  - giayxacnhan:
+      roles:
+      - GiayVayVon
+      - GiayTamHoanNghiaVu
+      - GiamThue
+  
+  - khoa_phong:
+      roles:
+        - ten_khoa_phong
+        - ten_nganh
+  - tro_cap
+  - the_tv_tthl
+  - giay_CT
+  - the_sinh_vien
+  - hoc_bong
+  - baoluu_thoihoc
+  - the_BHYT
+  - tk_qldt
+  - caplai_email_sv
+  - caplai_thanhphi_bhtn
+
+  - hocphi:
+      roles:
+      - hoi_hocphi
+  - ctdt:
+      roles:
+      - hoi_ctdt
+      - dai_hoc_chinh_quy
+      - sau_dai_hoc
+      - lien_thong
+    
+  - tuyen_sinh:
+      roles:
+      - thong_tin_tuyen_sinh
+  - quy_trinh:
+      roles:
+      - quy_trinh_tuyen_sinh
+  - doi_tuong:
+      roles:
+      - doi_tuong_tuyen_sinh
+  - diem_chuan:
+      roles:
+      - diem_tuyen_sinh_dh
+  - chi_tieu:
+      roles:
+      - chi_tieu_dh
+  - thanh_toan:
+      roles:
+      - thanh_toan_hoc_phi
+  - ky_tuc_xa:
+      roles:
+      - dang_ky_ky_tuc_xa
+  - dia_diem
+
+actions:
+  # - action_dang_bo
+  # - action_dang_uy
+  - action_thong_tin_dang
+  - action_lanh_dao_dang_doan_the
+  - action_thong_tin_hieu_ban_giam_hieu
+  - action_hoi_dong_truong
+  - action_thong_tin_truong
+
+  - action_giay_xac_nhan
+  - action_tro_cap
+  - action_thong_tin_khoa
+  - action_thuvien_tthl
+  - action_giay_cong_tac
+  - action_cap_the_sv
+  - action_hoc_bong
+  - action_baoluu_thoihoc
+  - action_cap_thaydoi_BHYT
+  - action_caplai_tk_QLDT
+  - action_caplai_email
+  - action_caplai_thanhphi_BHTN
+
+  - action_goi_y_hocphi
+  - action_hocphi_nganh
+  - action_goi_y_CTDT
+  - action_CTDT_nganh
+  - action_goi_y_thong_tin_tuyen_sinh
+  - action_thong_tin_tuyen_sinh_tung_nganh
+  - action_diem_chuan_tung_nganh
+  - action_chi_tieu_tung_nganh
+  - action_thanh_toan_hoc_phi
+  - action_goi_y_tuyen_sinh_dai_hoc
+  - action_goi_y_info_daihoc_lienthong_saudaihoc
+  - action_goi_y_quy_trinh_tuyen_sinh
+  - action_quy_trinh_tuyen_sinh_dh_lt_sdh
+  - action_goi_y_doi_tuong
+  - action_doi_tuong_tuyen_sinh_dh_lt_sdh
+  - action_thong_tin_ky_tuc_xa
+  - action_diadiem_khoa
+
+  - action_chatgemini_fallback
+
+  
+slots:
+  giayxacnhan:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: giayxacnhan
+        role: GiayVayVon
+      - type: from_entity
+        entity: giayxacnhan
+        role: GiayTamHoanNghiaVu
+      - type: from_entity
+        entity: giayxacnhan
+        role: GiamThue
+  ten_khoa_phong:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: khoa_phong
+        role: ten_khoa_phong
+  ask:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: ask
+        role: where
+      - type: from_entity
+        entity: ask
+        role: email
+      - type: from_entity
+        entity: ask
+        role: phone
+      - type: from_entity
+        entity: ask
+        role: info
+  tro_cap:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: tro_cap
+  the_tv_tthl: 
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: the_tv_tthl
+  giay_cong_tac:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: giay_CT
+  the_sinh_vien:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: the_sinh_vien
+  hoc_bong:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: hoc_bong
+  baoluu_thoihoc:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: baoluu_thoihoc
+  the_BHYT:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: the_BHYT
+  taikhoan_QLDT:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: tk_qldt
+  email_sv:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: caplai_email_sv
+  caplai_thanhphi_BHTN:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: caplai_thanhphi_bhtn
+
+  hocphi_nganh:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: khoa_phong
+        role: ten_nganh
+
+  CTDT_nganh:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: khoa_phong
+        role: ten_nganh
+
+  tuyen_sinh_daihoc_chinhquy:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: ctdt
+        role: dai_hoc_chinh_quy
+      - type: from_entity
+        entity: ctdt
+        role: lien_thong
+      - type: from_entity
+        entity: ctdt
+        role: sau_dai_hoc
+  ten_khoa:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: khoa_phong
+        role: ten_khoa
+  ten_nganh:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: khoa_phong
+        role: ten_nganh
+
+
+    
+responses: 
+  utter_greet:
+  - text: "Chào! bạn tôi có thể giúp gì cho bạn?"
+  - text: "Xin chào, bạn cần hỗ trợ gì?"
+
+  # utter_bye:
+  #   - text: "Tạm biệt, hẹn gặp lại."
+  #   - text: "Bye bye!"
+  #   - text: "Rất vui vì hỗ trợ được bạn."
+
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

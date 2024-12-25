@@ -1,0 +1,253 @@
+ /* Style for the chat widget */
+
+ .back-img {
+     background-image: url("https://hnkh.ctump.edu.vn/assets/images/sodo-bg.jpg");
+     background-repeat: no-repeat;
+     background-size: cover;
+     /* Đảm bảo hình nền bao phủ toàn bộ khung */
+     background-position: center;
+     /* Đặt hình nền ở giữa khung */
+     width: 100%;
+     /* Đảm bảo khung rộng 100% */
+     height: 1000px;
+     /* Đảm bảo khung cao 100% */
+ }
+
+
+ .container {
+     position: relative;
+ }
+
+ .chat-sign-button {
+     bottom: 20px;
+     right: 20px;
+     width: 62px;
+     height: 62px;
+ }
+
+ /* .card.position-fixed {
+    bottom: 100px; right:50px; width: 360px; height: 500px;
+} */
+ .card-header.bg-primary.text-white {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+ }
+
+ .card-body {
+     overflow-y: auto;
+     max-height: 3900px;
+ }
+
+ .card-footer {
+     display: flex;
+ }
+
+ #form {
+     padding: 8px;
+     width: 100%;
+ }
+
+ #div-send {
+     display: inline;
+ }
+
+ /* #user-name{
+    width: 50%;
+    display: inline;
+}
+
+} */
+
+
+ #messages {
+     list-style-type: none;
+     padding: 0;
+ }
+
+ #myModal {
+     display: none;
+     position: fixed;
+     z-index: 1;
+     padding-top: 100px;
+     left: 0;
+     top: 0;
+     width: 100%;
+     height: 100%;
+     overflow: auto;
+     background-color: rgb(0, 0, 0);
+     background-color: rgba(0, 0, 0, 0.9);
+ }
+
+ .modal-content {
+     margin: auto;
+     display: block;
+     width: 80%;
+     max-width: 700px;
+ }
+
+ .close {
+     position: absolute;
+     top: 15px;
+     right: 35px;
+     color: #f1f1f1;
+     font-size: 40px;
+     font-weight: bold;
+ }
+
+ .close:hover,
+ .close:focus {
+     color: #bbb;
+     text-decoration: none;
+     cursor: pointer;
+ }
+
+
+ .user-custom-class {
+     background-color: #d8f4bd;
+     padding: 10px;
+     border-radius: 12px;
+     margin-bottom: 10px;
+     color: black;
+ }
+
+ /* .admin-custom-class{
+    background-color: #4da6ff; padding: 10px; border-radius: 12px; margin-bottom: 10px; color: black;
+} */
+
+ .ctump-custom-class {
+     background-color: #e5a57d;
+     padding: 10px;
+     border-radius: 12px;
+     margin-bottom: 10px;
+     color: white;
+ }
+
+
+
+
+ #input_chat {
+     margin-bottom: 8px;
+ }
+
+ #btn-send {
+     width: 35%;
+     background-color: #4291e6;
+     border: none;
+     border-radius: 6px;
+     display: inline;
+
+     color: rgb(255, 255, 255);
+
+ }
+
+ #btn-send:hover {
+     background-color: rgb(20, 102, 195);
+
+ }
+
+ #chat-widget-button {
+     background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbCJx8zUpYCC7W5d-Izs3lxB_AgyhigLYzQw&s');
+     background-size: cover;
+     /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */
+ }
+
+ /* chinh giao dien nut chat admin va bot */
+ #chat-widget {
+     bottom: 100px;
+     right: 20px;
+     width: 400px;
+     height: 700px;
+ }
+
+ .card-header {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+ }
+
+
+
+ #chat-admin.active,
+ #chat-bot.active,
+ #chat-rag.active {
+     background-color: #e94c4c;
+     color: white;
+     /* width: 60px;
+    height: 50px; */
+ }
+
+ #chat-admin,
+ #chat-bot,
+ #chat-rag {
+     transition: background-color 0.3s;
+     /* width: 60px;
+    height: 50px; */
+ }
+
+ /* #chat-admin:hover, #chat-bot:hover {
+    background-color: #004085;
+    color: white;
+} */
+
+
+ /* void chat */
+ #btn-voice {
+     background-color: #ffc107;
+     /* Màu vàng */
+     color: white;
+     border: none;
+     border-radius: 50%;
+     padding: 10px;
+     font-size: 20px;
+     margin-left: 12px;
+     cursor: pointer;
+     transition: background-color 0.3s, transform 0.2s;
+ }
+
+ #btn-voice:hover {
+     background-color: #e0a800;
+     /* Màu vàng đậm khi hover */
+     transform: scale(1.1);
+     /* Phóng to nhẹ khi hover */
+ }
+
+ #btn-voice:active {
+     transform: scale(0.9);
+     /* Thu nhỏ khi click */
+ }
+
+ #btn-voice.recording {
+     background-color: #dc3545;
+     /* Màu đỏ khi đang ghi âm */
+ }
+
+ #btn-voice.recording i {
+     animation: pulse 1s infinite;
+ }
+
+ @keyframes pulse {
+     0% {
+         transform: scale(1);
+     }
+
+     50% {
+         transform: scale(1.1);
+     }
+
+     100% {
+         transform: scale(1);
+     }
+ }
+
+ #chat-widget-messages {
+     overflow-y: auto;
+ }
+
+
+ /* CSS cho hiệu ứng đang gõ 14/10/2024 */
+ .typing-indicator {
+    font-style: italic;
+    color: grey;
+    display: none; /* Ẩn hiệu ứng này khi không cần thiết */
+}

@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>User</title>
+    <!-- <link rel="stylesheet" href="../static/user.css"> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        .back-img {
+            background-image: url("https://hnkh.ctump.edu.vn/assets/images/sodo-bg.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            /* Đảm bảo hình nền bao phủ toàn bộ khung */
+            background-position: center;
+            /* Đặt hình nền ở giữa khung */
+            width: 100%;
+            /* Đảm bảo khung rộng 100% */
+            height: 1000px;
+            /* Đảm bảo khung cao 100% */
+        }
+
+        /* Fade-in effect */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Optional: Slide-in effect */
+        .slide-in {
+            animation: slideIn 0.5s ease-in;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+
+        .container {
+            position: relative;
+        }
+
+        .chat-sign-button {
+            bottom: 20px;
+            right: 20px;
+            width: 62px;
+            height: 62px;
+        }
+
+        /* .card.position-fixed {
+    bottom: 100px; right:50px; width: 360px; height: 500px;
+} */
+        .card-header.bg-primary.text-white {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-body {
+            overflow-y: auto;
+            /* max-height: 3400px; */
+        }
+
+        .card-footer {
+            display: flex;
+        }
+
+        #form {
+            padding: 8px;
+            width: 100%;
+        }
+
+        #div-send {
+            display: inline;
+        }
+
+        /* #user-name{
+    width: 50%;
+    display: inline;
+}
+
+} */
+
+
+        #messages {
+            list-style-type: none;
+            padding: 0;
+            /* height: 495px; */
+            /* overflow-y: auto; */
+        }
+
+        #myModal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+
+        .user-custom-class {
+            background-color: #00000026;
+            padding: 10px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            color: black;
+            font-weight: 600;
+        }
+
+        /* .admin-custom-class{
+    background-color: #4da6ff; padding: 10px; border-radius: 12px; margin-bottom: 10px; color: black;
+} */
+
+        .ctump-custom-class {
+            background-color: #0d6efd;
+            padding: 10px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            color: white;
+            font-weight: 600;
+        }
+
+
+
+
+        #input_chat {
+            margin-bottom: 8px;
+        }
+
+        #btn-send {
+            width: 35%;
+            background-color: #4291e6;
+            border: none;
+            border-radius: 6px;
+            display: inline;
+            /* margin-left: 12px; */
+            color: rgb(255, 255, 255);
+
+        }
+
+        #btn-send:hover {
+            background-color: rgb(20, 102, 195);
+
+        }
+
+        #chat-widget-button {
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbCJx8zUpYCC7W5d-Izs3lxB_AgyhigLYzQw&s');
+            background-size: cover;
+            /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */
+        }
+
+        /* chinh giao dien nut chat admin va bot */
+        #chat-widget {
+            bottom: 100px;
+            right: 20px;
+            width: 400px;
+            height: 700px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+
+
+        #chat-admin.active,
+        #chat-bot.active,
+        #chat-rag.active {
+            background-color: #e94c4c;
+            color: white;
+            /* width: 60px;
+    height: 50px; */
+        }
+
+        #chat-admin,
+        #chat-bot,
+        #chat-rag {
+            transition: background-color 0.3s;
+            /* width: 60px;
+    height: 50px; */
+        }
+
+        /* #chat-admin:hover, #chat-bot:hover {
+    background-color: #004085;
+    color: white;
+} */
+
+
+        /* void chat */
+        #btn-voice {
+            background-color: #ffc107;
+            /* Màu vàng */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            font-size: 20px;
+            margin-left: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        #btn-voice:hover {
+            background-color: #e0a800;
+            /* Màu vàng đậm khi hover */
+            transform: scale(1.1);
+            /* Phóng to nhẹ khi hover */
+        }
+
+        #btn-voice:active {
+            transform: scale(0.9);
+            /* Thu nhỏ khi click */
+        }
+
+        #btn-voice.recording {
+            background-color: #dc3545;
+            /* Màu đỏ khi đang ghi âm */
+        }
+
+        #btn-voice.recording i {
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        #chat-widget-messages {
+            overflow-y: auto;
+        }
+
+
+        /* CSS cho hiệu ứng đang gõ 14/10/2024 */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .typing-indicator .dot {
+            width: 8px;
+            height: 8px;
+            margin: 0 2px;
+            background-color: white;
+            border-radius: 50%;
+            animation: blink 1.4s infinite both;
+        }
+
+        .typing-indicator .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes blink {
+
+            0%,
+            80%,
+            100% {
+                opacity: 0;
+            }
+
+            40% {
+                opacity: 1;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="back-img">
+        <div class="container UI-chat">
+            <button id="chat-widget-button" type="button"
+                class="btn btn-primary rounded-circle chat-sign-button position-fixed"></button>
+
+            <div id="chat-widget" class="card position-fixed shadow ">
+                <div class="card-header bg-primary text-white">
+                    <h6 id="title-chatbot">Trợ lý ảo</h6>
+                    <button id="chat-widget-close-button" type="button" class="btn btn-light">X</button>
+                </div>
+
+                <div id="chat-widget-messages" class="card-body">
+                    <ul id="messages">
+                        <li class="ctump-custom-class"><b style="color:white">CTUMP:</b> Xin chào, tôi là hệ thống trả
+                            lời tự động của trường Đại học Cần Thơ. Tôi có thể giúp gì cho bạn?
+                    </ul>
+                </div>
+
+                <div class="card-footer">
+                    <form id="form">
+                        <input id="input_chat" autocomplete="off" class="form-control" maxlength="200"
+                            placeholder="Nhập câu hỏi của bạn tại đây" />
+                        <div class="input-group mb-1">
+                            <!-- <input type="text" id="user-name" class="form-control" required
+                                placeholder="Nhập tên để chat" aria-label="Nhập tên để chat" maxlength="50"> -->
+                            <button class="btn btn-primary" type="submit" id="btn-send">Gửi</button>
+                            <button id="btn-voice" type="button" class="btn btn-primary rounded-circle"><i
+                                    class="fas fa-microphone"></i></button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="txt-holder"></div>
+
+                <div id="myModal" class="modal">
+                    <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+                    <img class="modal-content" id="img01">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        let canSendMessage = true;
+
+        document.getElementById('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const input = document.getElementById('input_chat');
+            const messages_content = document.getElementById('messages');
+            const user_message = input.value.trim();
+            const chat_widget = document.getElementById('chat-widget-messages');
+
+
+            canSendMessage = false;
+
+            // Hiển thị tin nhắn của người dùng
+            const userItem = document.createElement('li');
+            userItem.textContent = 'Bạn: ' + user_message;
+            userItem.classList.add('user-custom-class');
+            messages_content.appendChild(userItem);
+            input.value = '';
+            scrollChatToBottom();
+
+            // Thêm hiệu ứng đang gõ
+            const typingIndicator = document.createElement('li');
+            typingIndicator.classList.add('ctump-custom-class', 'typing-indicator');
+            typingIndicator.id = 'typing-indicator';
+            typingIndicator.innerHTML = `
+            <b style="color:white">CTUMP:</b>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        `;
+            messages_content.appendChild(typingIndicator);
+            scrollChatToBottom();
+
+            // Gửi yêu cầu kiểm tra chính tả
+            fetch('/check_spell', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    question: user_message
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => {
+                            console.error('Error from server:', err);
+                            throw err;
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        throw new Error(data.error);
+                    }
+
+                    const spell_Response = data.response
+                    userItem.textContent = 'Bạn: ' + spell_Response;
+
+                    // Gửi tin nhắn đã kiểm tra chính tả đến server để nhận phản hồi từ bot
+                    return fetch('/ask', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            question: spell_Response,
+                            chat_history: JSON.parse(localStorage.getItem('chat_history')) || []
+                        })
+                    });
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const botResponse = data.response
+
+                    // Cập nhật lịch sử chat
+                    // updateChatHistory(user_message, botResponse);
+
+                    // Loại bỏ hiệu ứng đang gõ
+                    const typingIndicator = document.getElementById('typing-indicator');
+                    if (typingIndicator) {
+                        typingIndicator.remove();
+                    }
+                    // Hiển thị phản hồi của bot sau khi nhận được từ server
+                    const botItem = document.createElement('li');
+                    botItem.innerHTML = `<b style="colorwhite">CTUMP: </b>` + botResponse;
+                    botItem.classList.add('ctump-custom-class'); // Class để định dạng tin nhắn của bot
+                    messages_content.appendChild(botItem);
+
+                    // Cuộn xuống cuối để hiển thị tin nhắn mới nhất của bot
+                    scrollChatToBottom();
+                    // hieu ung load chu
+                    // const uniqueId = `txt-holder-${Date.now()}`;
+                    // const botItem = document.createElement('li');
+                    // botItem.innerHTML = `<b style="color:white">AskU : </b> <span id="${uniqueId}"></span>`;
+                    // botItem.classList.add('ctump-custom-class');
+                    // messages_content.appendChild(botItem);
+
+                    // const scrollChatToBottom_1 = () => {
+                    //     chat_widget.scrollTop = messages_content.scrollHeight;
+                    // };
+
+                    // let textPosition = 0;
+                    // let speed = 10;
+                    // const res = [botResponse];
+
+                    // const typewriter = () => {
+                    //     document.getElementById(uniqueId).innerHTML =
+                    //         res[0].substring(0, textPosition) + "<span class='blinker'>\u25ae</span>";
+                    //     scrollChatToBottom_1();
+                    //     if (textPosition++ < res[0].length) {
+                    //         setTimeout(typewriter, speed);
+                    //     } else {
+                    //         setTimeout(() => {
+                    //             const blinker = document.querySelector(`#${uniqueId} .blinker`);
+                    //             if (blinker) blinker.remove();
+                    //         }, 1000);
+                    //     }
+                    // };
+                    // typewriter();
+
+                    scrollChatToBottom();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    const errorItem = document.createElement('li');
+                    errorItem.innerHTML = `<b style="color:red">Lỗi:</b> ${error.message}`;
+                    errorItem.classList.add('error-custom-class');
+                    messages_content.appendChild(errorItem);
+                    scrollChatToBottom();
+                })
+                .finally(() => {
+                    // Hết quá trình xử lý, cho phép gửi tin nhắn mới sau 4 giây
+                    setTimeout(() => {
+                        canSendMessage = true;
+                    }, 4000);
+                });
+        });
+
+        // function getChatHistory() {
+        //     const chatHistory = localStorage.getItem("chat_history");
+        //     if (!chatHistory) {
+        //         return [];
+        //     }
+        //     try {
+        //         return JSON.parse(chatHistory);
+        //     } catch (e) {
+        //         console.error('thông báo lỗi và gửi về mảng rỗng: ', e);
+        //         return [];
+        //     }
+        // }
+        // function updateChatHistory(user_message, bot_response) {
+        //     const chatHistory = getChatHistory();
+
+        //     console.log("Độ dài của lịch sử chat là : ", chatHistory.length)
+
+        //     if (chatHistory.length == 5) {
+        //         chatHistory.shift()
+        //     }
+
+        //     const chat = {
+        //         human: user_message,
+        //         ai: bot_response
+        //     }
+        //     chatHistory.push(chat);
+        //     localStorage.setItem("chat_history", JSON.stringify(chatHistory));
+        // }
+        function scrollChatToBottom() {
+            var chatMessages = document.getElementById('chat-widget-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            chatMessages.scroll({
+                top: chatMessages.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+    <!-- Gửi tin nhắn qua Flask API -->
+    <!-- <script>
+        let canSendMessage = true;
+
+        document.getElementById('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const input = document.getElementById('input_chat');
+            const chat_widget = document.getElementById('chat-widget-messages');
+            const messages_content = document.getElementById('messages');
+            const user_message = input.value.trim(); 
+
+            // chat history
+            function getChatHistory() {
+                const chatHistory = localStorage.getItem("chat_history");
+                if(!chatHistory){
+                    return [];
+                } 
+                try {
+                    return JSON.parse(chatHistory);
+                } catch (e) {
+                    console.error('thông báo lỗi và gửi về mảng rỗng: ', e);
+                    return [];
+                }
+            }
+            
+            // cập nhật lại lịch sử chat
+            function updateChatHistory(user_message, bot_response) {
+                const chatHistory = getChatHistory();
+
+                console.log("Độ dài của lịch sử chat là : ", chatHistory.length)
+
+                if(chatHistory.length==3){
+                    chatHistory.shift()
+                }
+
+                const chat = {
+                    human : user_message,
+                    ai : bot_response
+                }
+                chatHistory.push(chat);
+                localStorage.setItem("chat_history", JSON.stringify(chatHistory));
+            }
+
+            if (canSendMessage && user_message) {
+                const userItem = document.createElement('li');
+                userItem.textContent = 'Bạn: ' + user_message;
+                userItem.classList.add('user-custom-class'); 
+                messages_content.appendChild(userItem);
+                input.value = '';
+                scrollChatToBottom();
+                canSendMessage = false;
+
+                // Thêm hiệu ứng đang gõ
+                const typingIndicator = document.createElement('li');
+                typingIndicator.classList.add('ctump-custom-class', 'typing-indicator');
+                typingIndicator.id = 'typing-indicator';
+                typingIndicator.innerHTML = `
+                <b style="color:white">AskU:</b>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>`;
+
+                messages_content.appendChild(typingIndicator);
+
+                fetch('/send_message', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: user_message,
+                        chat_history: JSON.parse(localStorage.getItem('chat_history')) || []
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Loại bỏ hiệu ứng đang gõ
+                        const typingIndicator = document.getElementById('typing-indicator');
+                        if (typingIndicator) {
+                            typingIndicator.remove();
+                        }
+                        console.log("Đã gửi tin nhắn thành công")
+
+                        const botResponse = data.reply.replaceAll(/\n+/g, '<br>');
+
+                        chat_history = getChatHistory();
+                        console.log(chat_history);
+
+                        // Cập nhật chat_history
+                        updateChatHistory(user_message, botResponse);
+
+                        const uniqueId = `txt-holder-${Date.now()}`;
+
+                        const botItem = document.createElement('li');
+                        botItem.innerHTML = `<b style="color:white">AskU : </b> <span id="${uniqueId}"></span>`;
+                        botItem.classList.add('ctump-custom-class');
+                        messages_content.appendChild(botItem);
+
+                        const scrollChatToBottom_1 = () => {
+                            chat_widget.scrollTop = messages_content.scrollHeight;
+                        };
+
+                        let textPosition = 0;
+                        let speed = 10; 
+                        const res = [botResponse]; 
+
+                        const typewriter = () => {
+                            document.getElementById(uniqueId).innerHTML = 
+                                res[0].substring(0, textPosition) + "<span class='blinker'>\u25ae</span>";
+                            scrollChatToBottom_1();
+                            if (textPosition++ < res[0].length) {
+                                setTimeout(typewriter, speed);
+                            } else {
+                                setTimeout(() => {
+                                    const blinker = document.querySelector(`#${uniqueId} .blinker`);
+                                    if (blinker) blinker.remove();
+                                }, 1000);
+                            }
+                        };
+                        typewriter();
+                    })
+                    .catch(error => console.error('Error:', error));                
+                // có thể gửi tin nhắn sau 4s
+                setTimeout(() => {
+                    canSendMessage = true;
+                }, 4000);
+            }
+        });
+
+        function scrollChatToBottom() {
+            var chatMessages = document.getElementById('chat-widget-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            chatMessages.scroll({
+                top: chatMessages.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+
+
+    </script> -->
+
+    <!-- đóng mở khung chat -->
+    <script>
+        $(document).ready(function () {
+            let welcomeMessageShown = false;
+
+            // Mở hoặc đóng khung chat bằng nút #chat-widget-button
+            $("#chat-widget-button").on("click", function () {
+                $("#chat-widget").toggle();
+                if ($("#chat-widget").is(":visible") && !welcomeMessageShown) {
+                    welcomeMessageShown = true;
+                    scrollChatToBottom();
+                }
+            });
+
+            // Đóng khung chat bằng nút #chat-widget-close-button
+            $("#chat-widget-close-button").on("click", function () {
+                $("#chat-widget").hide(); // Ẩn khung chat
+            });
+        });
+    </script>
+
+    <!-- f5 clear history -->
+    <script>
+        if (!localStorage.getItem('reloaded')) {
+            // Xóa dữ liệu localStorage và đặt cờ "reloaded"
+            localStorage.clear();
+            localStorage.setItem('reloaded', true);
+            location.reload();
+        } else {
+            // Xóa cờ "reloaded" khi trang đã được tải lại
+            localStorage.removeItem('reloaded');
+        }
+    </script>
+    <!-- voice chat -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (!('webkitSpeechRecognition' in window)) {
+                alert('Trình duyệt của bạn không hỗ trợ nhận diện giọng nói.');
+                return;
+            }
+
+            var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'vi-VN';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            const voiceButton = document.getElementById('btn-voice');
+            const inputField = document.getElementById('input_chat');
+
+            voiceButton.addEventListener('click', () => {
+                if (voiceButton.classList.contains('recording')) {
+                    recognition.stop();
+                } else {
+                    recognition.start();
+                }
+            });
+
+            recognition.onstart = () => {
+                voiceButton.classList.add('recording');
+                voiceButton.innerHTML = '<i class="fas fa-stop"></i>'; // Thay đổi biểu tượng sang stop
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                console.log('Voice input:', transcript); // Hiển thị trong console
+                inputField.value = transcript;
+            };
+
+            recognition.onspeechend = () => {
+                recognition.stop();
+            };
+
+            recognition.onend = () => {
+                voiceButton.classList.remove('recording');
+                voiceButton.innerHTML = '<i class="fas fa-microphone"></i>'; // Thay đổi biểu tượng về micro
+            };
+
+            recognition.onnomatch = (event) => {
+                console.log('Không khớp với giọng nói');
+                inputField.value = 'Không nhận dạng được giọng nói.';
+            };
+
+            recognition.onerror = (event) => {
+                console.error('Lỗi nhận dạng giọng nói:', event.error);
+                inputField.value = 'Lỗi nhận dạng giọng nói: ' + event.error;
+            };
+        });
+    </script>
+
+</body>
+
+</html>

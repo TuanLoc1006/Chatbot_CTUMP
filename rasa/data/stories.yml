@@ -1,0 +1,114 @@
+version: "3.1"
+stories:
+
+
+- story: Hỏi hoc phi chung
+  steps:
+    - intent: ask_hocphi
+    - action: action_goi_y_hocphi
+
+- story: Hỏi hoc phí nganh
+  steps:
+    - intent: ask_hocphi_nganh
+    - slot_was_set:
+      - hocphi_nganh
+    - action: action_hocphi_nganh
+
+
+- story: Hỏi CTDT chung
+  steps:
+    - intent: ask_CTDT
+    - action: action_goi_y_CTDT
+
+
+- story: Hỏi CTDT nganh
+  steps:
+    - intent: ask_CTDT_nganh
+    - slot_was_set:
+      - CTDT_nganh
+    - action: action_CTDT_nganh
+
+
+- story: Hỏi chung về đại học, lt, sdh
+  steps:
+    - intent: ask_daihoc_lienthong_saudaihoc
+    - action: action_goi_y_info_daihoc_lienthong_saudaihoc
+
+- story: Hỏi thông tin tuyển sinh chung
+  steps:
+    - intent: ask_thong_tin_tuyen_sinh
+    - action: action_goi_y_thong_tin_tuyen_sinh
+
+- story: Hỏi thông tin tuyển sinh từng ngành
+  steps:
+    - intent: ask_thong_tin_tuyen_sinh_tung_nganh
+    - slot_was_set:
+      - ten_nganh
+    - action: action_thong_tin_tuyen_sinh_tung_nganh
+
+- story: Hỏi điểm chuẩn từng ngành
+  steps:
+    - intent: ask_diem_chuan_tung_nganh
+    - slot_was_set:
+      - ten_nganh
+    - action: action_diem_chuan_tung_nganh
+
+
+- story: Hỏi chỉ tiêu từng ngành
+  steps:
+    - intent: ask_chi_tieu_tung_nganh
+    - slot_was_set:
+      - ten_nganh
+    - action: action_chi_tieu_tung_nganh
+
+- story: Hỏi thanh toán học phí
+  steps:
+    - intent: ask_thanh_toan_hoc_phi
+    - action: action_thanh_toan_hoc_phi
+
+- story: Hỏi thông tin tuyển sinh đại học chính quy
+  steps:
+    - intent: ask_tuyen_sinh_dh_sdh_lt
+    - slot_was_set:
+      - tuyen_sinh_daihoc_chinhquy
+    - action: action_goi_y_tuyen_sinh_dai_hoc
+
+- story: Hỏi quy trình tuyển sinh chung chung
+  steps:
+  - intent: ask_quy_trinh
+  - action: action_goi_y_quy_trinh_tuyen_sinh
+
+- story: Hỏi quy trình tuyển sinh đh lt sdh
+  steps:
+  - intent: ask_quy_trinh_tuyen_sinh_dh_lt_sdh
+  - action: action_quy_trinh_tuyen_sinh_dh_lt_sdh
+
+- story: Hỏi về đối tượng chung chung
+  steps:
+  - intent: ask_doi_tuong_con_nguoi
+  - action: action_goi_y_doi_tuong
+
+- story: Hỏi về đối tượng tuyển sinh
+  steps:
+  - intent: ask_doi_tuong_tuyen_sinh_dh_lt_sdh
+  - action: action_doi_tuong_tuyen_sinh_dh_lt_sdh
+
+
+- story: Hỏi thông tin kỹ túc xá
+  steps:
+  - intent: ask_thong_tin_ky_tuc_xa
+  - action: action_thong_tin_ky_tuc_xa
+
+
+- story: hỏi địa điểm khoa
+  steps:
+    - intent: ask_diadiem_khoa
+    - slot_was_set:
+      - ten_khoa
+    - action: action_diadiem_khoa
+
+- story: hỏi thông tin ban giám hiệu
+  steps:
+    - intent: ask_thong_tin_hieu_ban_giam_hieu
+    - action: action_thong_tin_hieu_ban_giam_hieu
+

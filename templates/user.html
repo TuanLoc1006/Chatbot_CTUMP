@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>User</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="back-img">
+        <div class="container UI-chat">
+            <button id="chat-widget-button" type="button"
+                class="btn btn-primary rounded-circle chat-sign-button position-fixed"></button>
+
+            <div id="chat-widget" class="card position-fixed shadow ">
+                <div class="card-header bg-primary text-white">
+                    <h6 id="title-chatbot"></h6>
+                    <!-- <button id="chat-admin" class="btn btn-sm btn-warning">Admin</button>
+                    <button id="chat-rag" class="btn btn-sm btn-warning">RAG</button> -->
+                    <button id="chat-widget-close-button" type="button" class="btn btn-light">X</button>
+                </div>
+
+                <div id="chat-widget-messages" class="card-body">
+                    <ul id="messages">
+                        <li class="ctump-custom-class"><b style="color:#000">CTUMP:</b> Xin chào, tôi là hệ thống trả
+                            lời tự động của trường Đại học Y Dược Cần Thơ. Tôi có thể giúp gì cho bạn?
+                    </ul>
+                </div>
+
+                <div class="card-footer">
+                    <form id="form">
+                        <input id="input_chat" autocomplete="off" class="form-control" required maxlength="150"
+                            placeholder="Nhập câu hỏi của bạn tại đây" />
+                        <div class="input-group mb-1">
+                            <!-- <input type="text" id="user-name" class="form-control" required
+                                placeholder="Nhập tên để chat" aria-label="Nhập tên để chat" maxlength="50"> -->
+                            <button class="btn btn-primary" type="submit" id="btn-send">Gửi</button>
+                            <button id="btn-voice" type="button" class="btn btn-primary rounded-circle"><i
+                                    class="fas fa-microphone"></i></button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="myModal" class="modal">
+                    <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+                    <img class="modal-content" id="img01">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- voice chat -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (!('webkitSpeechRecognition' in window)) {
+                alert('Trình duyệt của bạn không hỗ trợ nhận diện giọng nói.');
+                return;
+            }
+
+            var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'vi-VN';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            const voiceButton = document.getElementById('btn-voice');
+            const inputField = document.getElementById('input_chat');
+
+            voiceButton.addEventListener('click', () => {
+                if (voiceButton.classList.contains('recording')) {
+                    recognition.stop();
+                } else {
+                    recognition.start();
+                }
+            });
+
+            recognition.onstart = () => {
+                voiceButton.classList.add('recording');
+                voiceButton.innerHTML = '<i class="fas fa-stop"></i>'; // Thay đổi biểu tượng sang stop
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                console.log('Voice input:', transcript); // Hiển thị trong console
+                inputField.value = transcript;
+            };
+
+            recognition.onspeechend = () => {
+                recognition.stop();
+            };
+
+            recognition.onend = () => {
+                voiceButton.classList.remove('recording');
+                voiceButton.innerHTML = '<i class="fas fa-microphone"></i>'; // Thay đổi biểu tượng về micro
+            };
+
+            recognition.onnomatch = (event) => {
+                console.log('Không khớp với giọng nói');
+                inputField.value = 'Không nhận dạng được giọng nói.';
+            };
+
+            recognition.onerror = (event) => {
+                console.error('Lỗi nhận dạng giọng nói:', event.error);
+                inputField.value = 'Lỗi nhận dạng giọng nói: ' + event.error;
+            };
+        });
+    </script>
+
+
+    <!-- Gửi tin nhắn qua Flask API -->
+    <script>
+        let canSendMessage = true;
+
+        document.getElementById('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const input = document.getElementById('input_chat');
+            const messages_content = document.getElementById('messages');
+            const user_message = input.value.trim(); // Trim để tránh gửi tin nhắn rỗng
+            // sua loi chinh ta
+            // Gửi tin nhắn của người dùng đến server để nhận phản hồi từ bot
+            fetch('/check_spell', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    question: user_message // Sử dụng trường 'question' thay vì 'message'
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw err; });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        throw new Error(data.error);
+                    }
+                    // Thay thế ký tự xuống dòng \n bằng thẻ <br> trong phản hồi của bot
+
+                    if (canSendMessage && user_message) {
+                        const spell_Response = data.response.replaceAll(/\n+/g, '<br>'); // Sử dụng 'response' thay vì 'reply'
+                        console.log('check_spell response:', spell_Response);
+                        const userItem = document.createElement('li');
+                        userItem.textContent = 'Bạn: ' + spell_Response;
+                        userItem.classList.add('user-custom-class'); // Class để định dạng tin nhắn của người dùng
+                        messages_content.appendChild(userItem);
+
+                        // Xóa trường nhập sau khi gửi tin nhắn
+                        input.value = '';
+                        
+                        scrollChatToBottom();
+                        canSendMessage = false;
+                        // Cho phép gửi tin nhắn lại sau 4 giây
+                        setTimeout(() => {
+                            canSendMessage = true;
+                        }, 4000);
+                        // Gửi tin nhắn của người dùng đến server để nhận phản hồi từ bot
+                        fetch('/ask', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                question: spell_Response // Sử dụng trường 'question' thay vì 'message'
+                            })
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    return response.json().then(err => { throw err; });
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                if (data.error) {
+                                    throw new Error(data.error);
+                                }
+                                // Thay thế ký tự xuống dòng \n bằng thẻ <br> trong phản hồi của bot
+                                const botResponse = data.response.replaceAll(/\n+/g, '<br>'); // Sử dụng 'response' thay vì 'reply'
+                                console.log('Bot response:', botResponse);
+
+                                const regex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
+                                const messageWithLinks = botResponse.replace(regex, (url) => {
+                                    return `<a href="${url.startsWith('http') ? url : 'http://' + url}" target="_blank">${url}</a>`;
+                                });
+                                // Xử lý các trường hợp đặc biệt với <br> bên trong đường link
+                                const cleanMessage = messageWithLinks.replace(/<br>\s*<\/a>/g, '</a><br>');
+
+                                // Hiển thị phản hồi của bot sau khi nhận được từ server
+                                const botItem = document.createElement('li');
+                                botItem.innerHTML = `<b style="color:#000">CTUMP: </b>` + cleanMessage;
+                                botItem.classList.add('ctump-custom-class'); // Class để định dạng tin nhắn của bot
+                                messages_content.appendChild(botItem);
+
+                                // Cuộn xuống cuối để hiển thị tin nhắn mới nhất của bot
+                                scrollChatToBottom();
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                const errorItem = document.createElement('li');
+                                errorItem.innerHTML = `<b style="color:red">Lỗi:</b> ${error.message}`;
+                                errorItem.classList.add('error-custom-class'); // Class để định dạng tin nhắn lỗi
+                                messages_content.appendChild(errorItem);
+                                scrollChatToBottom();
+                            });
+
+                        
+                    }
+
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    const errorItem = document.createElement('li');
+                    errorItem.innerHTML = `<b style="color:red">Lỗi:</b> ${error.message}`;
+                    errorItem.classList.add('error-custom-class'); // Class để định dạng tin nhắn lỗi
+                    messages_content.appendChild(errorItem);
+                    scrollChatToBottom();
+                });
+
+
+
+
+
+
+            // ========================================
+
+
+        });
+
+        function scrollChatToBottom() {
+            var chatMessages = document.getElementById('chat-widget-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            chatMessages.scroll({
+                top: chatMessages.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            let welcomeMessageShown = false;
+
+            // Mở hoặc đóng khung chat bằng nút #chat-widget-button
+            $("#chat-widget-button").on("click", function () {
+                $("#chat-widget").toggle();
+                if ($("#chat-widget").is(":visible") && !welcomeMessageShown) {
+                    welcomeMessageShown = true;
+                    scrollChatToBottom();
+                }
+            });
+
+            // Đóng khung chat bằng nút #chat-widget-close-button
+            $("#chat-widget-close-button").on("click", function () {
+                $("#chat-widget").hide(); // Ẩn khung chat
+            });
+
+
+        });
+    </script>
+</body>
+
+</html>

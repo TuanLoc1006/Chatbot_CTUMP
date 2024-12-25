@@ -1,0 +1,24 @@
+version: "3.1"
+
+rules:
+
+- rule: Chào 
+  steps:
+  - intent: ask_hello
+  - action: utter_greet
+
+
+# - rule: Remove unrelated entities
+#   condition:
+#     # Điều kiện để áp dụng quy tắc này
+#     - active_loop: null  # Đảm bảo rằng không có hoạt động nhập liệu hoặc hỏi đáp nào đang được thực hiện
+#   steps:
+#     - intent: hoi_hocphi  # Intent bạn muốn áp dụng quy tắc cho
+#     - action: utter_not_understood  # Action để thực hiện khi không hiểu
+#   - rule: Remove unknown entities
+#       condition:
+#         # Điều kiện để áp dụng quy tắc này
+#         - active_loop: null  # Đảm bảo rằng không có hoạt động nhập liệu hoặc hỏi đáp nào đang được thực hiện
+#       steps:
+#         - intent: hoi_hocphi  # Intent bạn muốn áp dụng quy tắc cho
+#         - action: utter_not_understood  # Action để thực hiện khi không hiểu

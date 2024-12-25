@@ -1,0 +1,47 @@
+
+action_cap_lai_the_sv: thông tin
+action_cap_lai_the_sv: liên hệ
+action_cap_lai_the_sv: qua trinh phat trien dang
+action_thong_tin_dang: quá trình hình thành đảng
+action_thong_tin_dang: đảng bộ qua các năm
+action_thong_tin_dang: các giai đoạn phát triển của đảng
+action_thong_tin_dang: thông tin đảng
+action_thong_tin_dang: văn phòng đảng ủy
+action_thong_tin_dang: ban tổ chức đảng
+action_thong_tin_dang: ban tuyên giáo của đảng trường
+action_thong_tin_dang: ủy ban kiểm tra đảng
+action_thong_tin_dang: ủy ban kiểm tra đảng
+action_thong_tin_dang: cơ cấu tổ chức đảng
+action_thong_tin_dang: cơ cấu tổ chức đảng ủy
+action_cap_lai_the_sv: chi bộ cơ sở
+action_cap_lai_the_sv: thông tin chi bộ cơ sở
+action_thong_tin_dang: bí thu
+action_thong_tin_dang: bch dang
+action_thong_tin_dang: lam sao trở thành ban chấp hành
+action_thong_tin_dang: chức năng và nhiệm vụ
+
+action_thong_tin_dang: chức năng và nhiệm vụ của đảng
+action_thong_tin_dang: tv hội đồng trường
+action_ban_giam_hieu: tv ban giam hieu
+action_cap_lai_the_sv: liên hệ
+action_cap_lai_the_sv: cách tổ chức
+action_cap_lai_the_sv: trường đại học tổ chức ra sao
+
+action_hoi_dong_truong: chức năng hội đồng trường
+action_thong_tin_dang: tầm nhìn và sứ mạng của trường
+action_thong_tin_dang: giá trị cốt lỗi
+action_thong_tin_dang: thông tin trường ctu
+action_cap_lai_the_sv: siêu h
+action_cap_lai_the_sv: khoa y o dau
+action_cap_lai_the_sv: khoa y o dau
+action_cap_lai_the_sv: gia tien hoc bao nhieu z a
+action_cap_lai_the_sv: giá tiền học bao nhiêu vậy ạ
+action_cap_lai_the_sv: hp la bao nhieu
+action_cap_lai_the_sv: học phí cho 1 năm là bao nhiêu
+action_cap_lai_the_sv: ngành y khoa
+action_cap_lai_the_sv: chào
+action_quy_trinh_tuyen_sinh_dh_lt_sdh: hình thức xét tuyển
+action_quy_trinh_tuyen_sinh_dh_lt_sdh: thông tin ktx
+action_quy_trinh_tuyen_sinh_dh_lt_sdh: thông tin ký túc xá
+action_quy_trinh_tuyen_sinh_dh_lt_sdh: kí túc xá
+action_quy_trinh_tuyen_sinh_dh_lt_sdh: ký túc xá
